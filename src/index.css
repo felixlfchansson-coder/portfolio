@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --bg-deep: #050816;
+  --bg-panel: rgba(8, 14, 32, 0.78);
+
+  --phoenix-orange: #ff8a2a;
+  --phoenix-gold: #ffc857;
+
+  --border-phoenix: rgba(255, 138, 42, 0.42);
+}
+
+body {
+  margin: 0;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255,138,42,0.15),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #050816 0%,
+      #081225 100%
+    );
+
+  color: #f8fafc;
+}
+@keyframes phoenixBreath {
+  0% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.34;
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.02);
+    opacity: 0.42;
+  }
+
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.34;
+  }
+}
+
+.phoenix-breath {
+  animation: phoenixBreath 8s ease-in-out infinite;
+}
