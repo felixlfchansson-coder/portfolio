@@ -22,7 +22,6 @@ const skills = [
   "Samarbete",
   "Feedback & lärande",
 ];
-
 const experience = [
   {
     role: "Kriminalvårdare",
@@ -34,13 +33,37 @@ const experience = [
     role: "Församlingsassistent",
     company: "Borgsjö-Haverö församling",
     period: "Februari 2024 – Maj 2024",
-    text: "Arbetade med barn och ungdomar i verksamhet och på läger. Rollen innefattade planering, ansvarstagande och samarbete i grupp.",
+    text: "Arbetade med barn och ungdomar i åldrarna 0–21 år, både i verksamhet och på läger. Rollen innefattade planering, ansvarstagande och samarbete.",
   },
   {
     role: "Säsongsanställd vaktmästare",
     company: "Timrå församling",
     period: "Maj 2023 – November 2023",
-    text: "Ansvarade för kyrkogårdsskötsel, gravvård och trädgårdsarbete samt bemötande av besökare.",
+    text: "Ansvarade för kyrkogårdsskötsel, gravvård och trädgårdsarbete samt bemötande av kyrkogårdsbesökare.",
+  },
+  {
+    role: "Fritidsledare",
+    company: "Bergeforsens skola",
+    period: "Mars 2023 – Maj 2023",
+    text: "Arbetade som fritidspersonal vid raster och i fritidsverksamhet. Vikarierade även som idrottslärare.",
+  },
+  {
+    role: "Telemarketer",
+    company: "Flexbert, Sörberge",
+    period: "Maj 2022 – Mars 2023",
+    text: "Arbetade med försäljning av reflexprodukter via telefon.",
+  },
+  {
+    role: "Butikspersonal",
+    company: "ICA Andersson, Sörberge",
+    period: "Februari 2021 – December 2021",
+    text: "Arbetade med kassa, butiksservice, varuplock och lager.",
+  },
+  {
+    role: "Restaurangbiträde",
+    company: "Max restaurang, Birsta",
+    period: "Maj 2019 – April 2020",
+    text: "Arbetade med kassa, drive-in, servering och restaurangservice.",
   },
 ];
 
@@ -234,9 +257,19 @@ export default function FenixCV() {
 
             <Section title="Tidigare erfarenhet & referenser">
               <p>
-                Tidigare erfarenhet från försäljning, restaurang, vård och
-                evenemangsarbete. Referenser lämnas på begäran.
+                Tidigare erfarenhet från försäljning, restaurang, vård och evenemangsarbete.
               </p>
+
+              <ul className="list-disc space-y-2 pl-5">
+                <li>Garda Alarm, Kristianstad — Säkerhetskonsult, Januari 2018 – September 2018</li>
+                <li>Svenska Trygghetslösningar, Kristianstad — Säkerhetskonsult, September 2017 – December 2017</li>
+                <li>Burger King, Ronneby — Restaurangbiträde, Juni 2017 – Augusti 2017</li>
+                <li>Call4U, Ronneby — Telemarketer, Januari 2017 – Juni 2017</li>
+                <li>Almhaga äldreboende, Färlöv — Vårdbiträde, Maj 2016 – Augusti 2016</li>
+                <li>Ahlgrens AB — Restaurangbiträde, Maj 2014 – September 2018</li>
+              </ul>
+
+              <p>Referenser lämnas på begäran.</p>
             </Section>
           </section>
         </div>
