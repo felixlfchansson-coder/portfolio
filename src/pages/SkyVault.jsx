@@ -1,51 +1,51 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Cloud, Check } from "lucide-react";
+import { Cloud, Check, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
-import skyBg from "../assets/skyvault/skyvault-bg.png";
+const DIFFICULTY_COLORS = {
+  Easy:   "border-green-400/30 bg-green-400/10 text-green-300",
+  Medium: "border-yellow-400/30 bg-yellow-400/10 text-yellow-300",
+  Hard:   "border-red-400/30 bg-red-400/10 text-red-300",
+};
 
-const projects = [
-  {
-    title: "B-tzy",
-    type: "Game Project",
-    description:
-      "A game project published on GitHub, showcasing version control, structure and hands-on development.",
-    stack: ["JavaScript", "Git", "GitHub"],
-    status: "Completed",
-    link: "https://github.com/felixlfchansson-coder/B-tzy",
-  },
-  {
-    title: "Portfolio V1",
-    type: "Web Project",
-    description:
-      "My first personal portfolio universe built with React, Tailwind and cinematic UI design.",
-    stack: ["React", "Tailwind", "Vite"],
-    status: "Completed",
-    link: "#",
-  },
-  {
-    title: "CLI Todo App",
-    type: "Backend Practice",
-    description:
-      "A command-line todo application focused on structure, logic and version control practice.",
-    stack: ["Node.js", "CLI", "Git"],
-    status: "Completed",
-    link: "#",
-  },
-];
+const FILTERS = ["All", "Easy", "Medium", "Hard"];
 
 export default function SkyVault() {
+  const [projects, setProjects] = useState([]);
+  const [filter, setFilter] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const url =
+      filter === "All"
+        ? "http://localhost:3001/api/projects"
+        : `http://localhost:3001/api/projects?difficulty=${filter}`;
+
+    setLoading(true);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Could not connect to server.");
+        setLoading(false);
+      });
+  }, [filter]);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#020617] pl-28 text-white">
-      <img
-        src={skyBg}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#0a1628] to-[#020617]" />
+      <div className="absolute inset-0 bg-[url('/src/assets/skyvault/skyvault-bg.png')] bg-cover bg-center opacity-60" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/80 via-[#020617]/25 to-[#020617]/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-transparent to-transparent" />
 
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-8 py-16">
+      <section className="relative z-10 mx-auto max-w-7xl px-8 py-16">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,59 +63,163 @@ export default function SkyVault() {
             </span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
-            A cloud archive of projects I have completed, learned from and
-            stored along my developer journey.
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-200">
+            Learned from. Built from. Risen from.
+          </p>
+          <p className="mt-2 max-w-2xl text-base leading-7 text-slate-400">
+            A cloud archive of projects I have completed, learned from and stored
+            along my developer journey.
           </p>
         </motion.div>
 
-        <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => (
-            <ProjectCloudCard key={project.title} project={project} index={index} />
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="mt-10 flex flex-wrap gap-3"
+        >
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-full border px-5 py-2 text-sm font-bold transition-all ${
+                filter === f
+                  ? "border-orange-300 bg-orange-300/20 text-orange-300"
+                  : "border-white/20 bg-white/5 text-slate-300 hover:border-white/40 hover:text-white"
+              }`}
+            >
+              {f === "All" ? "All Projects" : f}
+            </button>
           ))}
+        </motion.div>
+
+        {/* Cards */}
+        <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {loading && (
+            <p className="col-span-3 text-center text-slate-400">Loading projects...</p>
+          )}
+          {error && (
+            <p className="col-span-3 text-center text-red-400">{error}</p>
+          )}
+          {!loading && !error && projects.length === 0 && (
+            <p className="col-span-3 text-center text-slate-400">
+              No projects found for this difficulty.
+            </p>
+          )}
+          {!loading &&
+            !error &&
+            projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
         </div>
+
+        {/* The Mountain Awaits Banner */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="mt-24"
+        >
+          <Link to="/ember-archive">
+            <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/60 transition hover:scale-[1.01]">
+              {/* Sky side */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#1a2a4a] to-[#1a0a05]" />
+              {/* Glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-900/20 to-orange-800/40" />
+              {/* Embers */}
+              <div className="absolute right-0 top-0 h-full w-1/2 overflow-hidden opacity-60">
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute h-1 w-1 rounded-full bg-orange-400"
+                    style={{
+                      right: `${10 + i * 10}%`,
+                      top: `${20 + (i % 4) * 20}%`,
+                    }}
+                    animate={{ y: [-10, -30], opacity: [1, 0] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2 + i * 0.3,
+                      delay: i * 0.4,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div className="relative z-10 flex items-center justify-between px-12 py-10">
+                <div>
+                  <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-400">
+                    The mountain awaits
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Where the fire never fades
+                  </p>
+                </div>
+
+                {/* Pagoda silhouette */}
+                <div className="flex flex-col items-center">
+                  <span className="text-4xl">🏯</span>
+                  <div className="mt-1 h-px w-16 bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
+                </div>
+
+                <div className="text-right">
+                  <h2 className="bg-gradient-to-r from-orange-300 via-amber-200 to-orange-400 bg-clip-text text-3xl font-black text-transparent">
+                    Ember Archive
+                  </h2>
+                  <p className="mt-1 text-sm text-orange-300/60 transition group-hover:text-orange-300">
+                    Explore projects forged in deeper flames →
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
       </section>
     </main>
   );
 }
 
-function ProjectCloudCard({ project, index }) {
+function ProjectCard({ project, index }) {
   return (
     <motion.a
-      href={project.link}
-      target="_blank"
+      href={project.link !== "#" ? project.link : undefined}
+      target={project.link !== "#" ? "_blank" : undefined}
       rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 90, scale: 0.92 }}
+      initial={{ opacity: 0, y: 60, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true }}
-      transition={{
-        delay: index * 0.12,
-        type: "spring",
-        stiffness: 80,
-      }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 80 }}
       className="group relative overflow-hidden rounded-[2rem] border border-white/15 bg-[#06111f]/65 p-7 shadow-2xl shadow-black/40 backdrop-blur-xl transition hover:-translate-y-2 hover:border-orange-300/40 hover:bg-[#06111f]/80"
     >
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/20 to-transparent opacity-40" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
 
       <div className="relative z-10">
+        {/* Top row */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-200 ring-1 ring-sky-200/20">
             <Cloud className="h-7 w-7" />
           </div>
 
-          <span className="inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-xs font-bold text-green-300">
-            <Check className="h-3 w-3" />
-            {project.status}
-          </span>
+          <div className="flex items-center gap-2">
+            {/* Difficulty badge */}
+            <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold ${DIFFICULTY_COLORS[project.difficulty]}`}>
+              {project.difficulty}
+            </span>
+            {/* Status badge */}
+            <span className="inline-flex items-center gap-1 rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-xs font-bold text-green-300">
+              <Check className="h-3 w-3" />
+              {project.status}
+            </span>
+          </div>
         </div>
 
         <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-300">
           {project.type}
         </p>
 
-        <h2 className="mt-3 text-2xl font-black text-white">
-          {project.title}
-        </h2>
+        <h2 className="mt-3 text-2xl font-black text-white">{project.title}</h2>
 
         <p className="mt-4 min-h-[72px] text-sm leading-6 text-slate-300">
           {project.description}
@@ -131,6 +235,13 @@ function ProjectCloudCard({ project, index }) {
             </span>
           ))}
         </div>
+
+        {project.link !== "#" && (
+          <div className="mt-4 flex items-center gap-1 text-xs text-orange-300/60 transition group-hover:text-orange-300">
+            <ExternalLink className="h-3 w-3" />
+            View project
+          </div>
+        )}
       </div>
     </motion.a>
   );

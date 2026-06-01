@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import Journey from "./pages/Journey";
 import SkyVault from "./pages/SkyVault";
+import EmberArchive from "./pages/EmberArchive";
 import FutureForge from "./pages/FutureForge";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/journey" element={<Journey />} />
         <Route path="/skyvault" element={<SkyVault />} />
+        <Route path="/ember-archive" element={<EmberArchive />} />
         <Route path="/future-forge" element={<FutureForge />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

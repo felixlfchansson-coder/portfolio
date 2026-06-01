@@ -157,7 +157,7 @@ export default function About() {
 
         {/* FACTS */}
         <section className="mt-10 grid gap-5 rounded-[2rem] border border-white/10 bg-black/30 p-8 backdrop-blur-xl md:grid-cols-5">
-          <Fact title="Age" value="26" />
+          <Fact title="Age" value="30" />
           <Fact title="Based In" value="Sweden" />
           <Fact title="Direction" value="Backend Development" />
           <Fact title="Education" value="Grit Academy" />

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Portfolio V1",
+    "type": "Web Project",
+    "description": "My first personal portfolio universe built with React, Tailwind and cinematic UI design. The foundation of the fenix journey.",
+    "stack": ["React", "Tailwind", "Vite"],
+    "difficulty": "Medium",
+    "status": "Completed",
+    "link": "#"
+  },
+  {
+    "id": 2,
+    "title": "Country Explorer",
+    "type": "Web Application",
+    "description": "An interactive world map to search and explore countries. Displays flag, population, currency and language via a live REST API.",
+    "stack": ["JavaScript", "Leaflet.js", "REST API", "HTML", "CSS"],
+    "difficulty": "Medium",
+    "status": "Completed",
+    "link": "#"
+  }
+]
