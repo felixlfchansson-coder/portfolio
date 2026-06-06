@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Flame } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import gamelabBg from "../assets/skyvault/gamelab-bg.png";
+
 const DIFFICULTY_COLORS = {
   Easy:   { badge: "border-green-400/30 bg-green-400/10 text-green-300", dot: "bg-green-400" },
   Medium: { badge: "border-yellow-400/30 bg-yellow-400/10 text-yellow-300", dot: "bg-yellow-400" },
@@ -10,14 +12,14 @@ const DIFFICULTY_COLORS = {
 };
 
 const STATUS_COLORS = {
-  Completed:      "border-green-400/20 bg-green-400/10 text-green-300",
-  Ongoing:        "border-amber-400/20 bg-amber-400/10 text-amber-300",
+  Completed:        "border-green-400/20 bg-green-400/10 text-green-300",
+  Ongoing:          "border-amber-400/20 bg-amber-400/10 text-amber-300",
   "In Development": "border-slate-400/20 bg-slate-400/10 text-slate-300",
 };
 
 const FILTERS = ["All", "Easy", "Medium", "Hard"];
 
-export default function EmberArchive() {
+export default function GameLab() {
   const [games, setGames] = useState([]);
   const [filter, setFilter] = useState("All");
   const [loading, setLoading] = useState(true);
@@ -26,8 +28,8 @@ export default function EmberArchive() {
   useEffect(() => {
     const url =
       filter === "All"
-        ? "http://localhost:3001/api/games"
-        : `http://localhost:3001/api/games?difficulty=${filter}`;
+        ? "https://felix-backend-production-50fa.up.railway.app/api/games"
+        : `https://felix-backend-production-50fa.up.railway.app/api/games?difficulty=${filter}`;
 
     setLoading(true);
     fetch(url)
@@ -45,7 +47,7 @@ export default function EmberArchive() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#09050e] pl-28 text-white">
       {/* Background */}
-      <div className="absolute inset-0 bg-[url('/src/assets/ember/ember-bg.png')] bg-cover bg-center opacity-50" />
+      <img src={gamelabBg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#09050e]/90 via-[#09050e]/50 to-[#09050e]/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#09050e]/95 via-transparent to-[#09050e]/40" />
 
@@ -55,32 +57,18 @@ export default function EmberArchive() {
           <motion.div
             key={i}
             className="absolute h-1 w-1 rounded-full bg-orange-400"
-            style={{
-              left: `${10 + i * 7}%`,
-              top: `${30 + (i % 5) * 12}%`,
-            }}
+            style={{ left: `${10 + i * 7}%`, top: `${30 + (i % 5) * 12}%` }}
             animate={{ y: [-20, -60], opacity: [0.8, 0] }}
-            transition={{
-              repeat: Infinity,
-              duration: 3 + i * 0.4,
-              delay: i * 0.5,
-            }}
+            transition={{ repeat: Infinity, duration: 3 + i * 0.4, delay: i * 0.5 }}
           />
         ))}
       </div>
 
       <section className="relative z-10 mx-auto max-w-7xl px-8 py-16">
         {/* Back link */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Link
-            to="/skyvault"
-            className="inline-flex items-center gap-2 text-sm text-orange-300/60 transition hover:text-orange-300"
-          >
-            ← Back to SkyVault
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-orange-300/60 transition hover:text-orange-300">
+            ← Back to Projects
           </Link>
         </motion.div>
 
@@ -96,17 +84,14 @@ export default function EmberArchive() {
           </p>
 
           <h1 className="text-6xl font-black leading-none tracking-tight md:text-8xl">
-            Ember{" "}
+            The{" "}
             <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-red-400 bg-clip-text text-transparent">
-              Archive
+              Forge
             </span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-orange-100/70">
             Games I build. Worlds I believe in. Stories that burn.
-          </p>
-          <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-orange-400/50">
-            Three worlds. Three stories. One archive.
           </p>
         </motion.div>
 
@@ -134,24 +119,14 @@ export default function EmberArchive() {
 
         {/* Cards */}
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {loading && (
-            <p className="col-span-3 text-center text-orange-400/50">
-              Stoking the flames...
-            </p>
-          )}
-          {error && (
-            <p className="col-span-3 text-center text-red-400">{error}</p>
-          )}
+          {loading && <p className="col-span-3 text-center text-orange-400/50">Stoking the flames...</p>}
+          {error && <p className="col-span-3 text-center text-red-400">{error}</p>}
           {!loading && !error && games.length === 0 && (
-            <p className="col-span-3 text-center text-slate-500">
-              No games found for this difficulty.
-            </p>
+            <p className="col-span-3 text-center text-slate-500">No games found for this difficulty.</p>
           )}
-          {!loading &&
-            !error &&
-            games.map((game, index) => (
-              <GameCard key={game.id} game={game} index={index} />
-            ))}
+          {!loading && !error && games.map((game, index) => (
+            <GameCard key={game.id} game={game} index={index} />
+          ))}
         </div>
 
         {/* Footer tagline */}
@@ -166,9 +141,7 @@ export default function EmberArchive() {
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-orange-400/40">
             Built with heart. Played with fire.
           </p>
-          <p className="text-xs text-orange-900/60">
-            炎は記憶する。我らもまた、炎となる。
-          </p>
+          <p className="text-xs text-orange-900/60">炎は記憶する。我らもまた、炎となる。</p>
         </motion.div>
       </section>
     </main>
@@ -190,18 +163,14 @@ function GameCard({ game, index }) {
       transition={{ delay: index * 0.1, type: "spring", stiffness: 80 }}
       className="group relative overflow-hidden rounded-[2rem] border border-orange-900/30 bg-[#100808]/70 p-7 shadow-2xl shadow-black/60 backdrop-blur-xl transition hover:-translate-y-2 hover:border-orange-400/40 hover:bg-[#180a0a]/80"
     >
-      {/* Bottom ember glow */}
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-orange-900/20 to-transparent" />
-      {/* Top corner glow */}
       <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-orange-500/5 blur-2xl" />
 
       <div className="relative z-10">
-        {/* Top row */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-400/10 text-orange-300 ring-1 ring-orange-400/20">
             <Flame className="h-7 w-7" />
           </div>
-
           <div className="flex items-center gap-2">
             <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${diff.badge}`}>
               <span className={`h-1.5 w-1.5 rounded-full ${diff.dot}`} />
@@ -213,22 +182,13 @@ function GameCard({ game, index }) {
           </div>
         </div>
 
-        <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-400">
-          {game.genre}
-        </p>
-
+        <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-400">{game.genre}</p>
         <h2 className="mt-3 text-2xl font-black text-white">{game.title}</h2>
-
-        <p className="mt-4 min-h-[72px] text-sm leading-6 text-orange-100/60">
-          {game.description}
-        </p>
+        <p className="mt-4 min-h-[72px] text-sm leading-6 text-orange-100/60">{game.description}</p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {game.stack.map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-orange-900/40 bg-orange-900/10 px-3 py-1 text-xs text-orange-200/60"
-            >
+            <span key={item} className="rounded-full border border-orange-900/40 bg-orange-900/10 px-3 py-1 text-xs text-orange-200/60">
               {item}
             </span>
           ))}

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Cloud, Check, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import gamelabBtn from "../assets/skyvault/gamelab-btn.png";
+
 const DIFFICULTY_COLORS = {
   Easy:   "border-green-400/30 bg-green-400/10 text-green-300",
   Medium: "border-yellow-400/30 bg-yellow-400/10 text-yellow-300",
@@ -11,7 +13,7 @@ const DIFFICULTY_COLORS = {
 
 const FILTERS = ["All", "Easy", "Medium", "Hard"];
 
-export default function SkyVault() {
+export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [filter, setFilter] = useState("All");
   const [loading, setLoading] = useState(true);
@@ -20,8 +22,8 @@ export default function SkyVault() {
   useEffect(() => {
     const url =
       filter === "All"
-        ? "http://localhost:3001/api/projects"
-        : `http://localhost:3001/api/projects?difficulty=${filter}`;
+        ? "https://felix-backend-production-50fa.up.railway.app/api/projects"
+        : `https://felix-backend-production-50fa.up.railway.app/api/projects?difficulty=${filter}`;
 
     setLoading(true);
     fetch(url)
@@ -53,13 +55,12 @@ export default function SkyVault() {
           className="max-w-4xl"
         >
           <p className="mb-4 text-sm font-black uppercase tracking-[0.35em] text-orange-300">
-            Completed Projects
+            My Projects
           </p>
 
           <h1 className="text-6xl font-black leading-none tracking-tight md:text-8xl">
-            Sky
             <span className="bg-gradient-to-r from-orange-300 via-yellow-200 to-sky-200 bg-clip-text text-transparent">
-              Vault
+              Projects
             </span>
           </h1>
 
@@ -67,8 +68,7 @@ export default function SkyVault() {
             Learned from. Built from. Risen from.
           </p>
           <p className="mt-2 max-w-2xl text-base leading-7 text-slate-400">
-            A cloud archive of projects I have completed, learned from and stored
-            along my developer journey.
+            A collection of projects I have completed and learned from along my developer journey.
           </p>
         </motion.div>
 
@@ -96,25 +96,17 @@ export default function SkyVault() {
 
         {/* Cards */}
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {loading && (
-            <p className="col-span-3 text-center text-slate-400">Loading projects...</p>
-          )}
-          {error && (
-            <p className="col-span-3 text-center text-red-400">{error}</p>
-          )}
+          {loading && <p className="col-span-3 text-center text-slate-400">Loading projects...</p>}
+          {error && <p className="col-span-3 text-center text-red-400">{error}</p>}
           {!loading && !error && projects.length === 0 && (
-            <p className="col-span-3 text-center text-slate-400">
-              No projects found for this difficulty.
-            </p>
+            <p className="col-span-3 text-center text-slate-400">No projects found for this difficulty.</p>
           )}
-          {!loading &&
-            !error &&
-            projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
+          {!loading && !error && projects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
         </div>
 
-        {/* The Mountain Awaits Banner */}
+        {/* Banner – The Forge */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -122,51 +114,47 @@ export default function SkyVault() {
           transition={{ duration: 1 }}
           className="mt-24"
         >
-          <Link to="/ember-archive">
+          <Link to="/the-forge">
             <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/60 transition hover:scale-[1.01]">
-              {/* Sky side */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#1a2a4a] to-[#1a0a05]" />
-              {/* Glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-900/20 to-orange-800/40" />
+              {/* Background image */}
+              <img
+                src={gamelabBtn}
+                alt="The Forge"
+                className="absolute inset-0 h-full w-full object-cover opacity-60 transition group-hover:opacity-75"
+              />
+              {/* Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/80 via-transparent to-[#1a0a05]/80" />
               {/* Embers */}
               <div className="absolute right-0 top-0 h-full w-1/2 overflow-hidden opacity-60">
                 {[...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
                     className="absolute h-1 w-1 rounded-full bg-orange-400"
-                    style={{
-                      right: `${10 + i * 10}%`,
-                      top: `${20 + (i % 4) * 20}%`,
-                    }}
+                    style={{ right: `${10 + i * 10}%`, top: `${20 + (i % 4) * 20}%` }}
                     animate={{ y: [-10, -30], opacity: [1, 0] }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 2 + i * 0.3,
-                      delay: i * 0.4,
-                    }}
+                    transition={{ repeat: Infinity, duration: 2 + i * 0.3, delay: i * 0.4 }}
                   />
                 ))}
               </div>
 
               <div className="relative z-10 flex items-center justify-between px-12 py-10">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-400">
+                  <p className="text-sm font-bold uppercase tracking-[0.3em] text-slate-300">
                     The mountain awaits
                   </p>
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-slate-400">
                     Where the fire never fades
                   </p>
                 </div>
 
-                {/* Pagoda silhouette */}
                 <div className="flex flex-col items-center">
-                  <span className="text-4xl">🏯</span>
+                  <span className="text-4xl"></span>
                   <div className="mt-1 h-px w-16 bg-gradient-to-r from-transparent via-orange-400/60 to-transparent" />
                 </div>
 
                 <div className="text-right">
                   <h2 className="bg-gradient-to-r from-orange-300 via-amber-200 to-orange-400 bg-clip-text text-3xl font-black text-transparent">
-                    Ember Archive
+                    The Forge
                   </h2>
                   <p className="mt-1 text-sm text-orange-300/60 transition group-hover:text-orange-300">
                     Explore projects forged in deeper flames →
@@ -196,18 +184,14 @@ function ProjectCard({ project, index }) {
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
 
       <div className="relative z-10">
-        {/* Top row */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-200 ring-1 ring-sky-200/20">
             <Cloud className="h-7 w-7" />
           </div>
-
           <div className="flex items-center gap-2">
-            {/* Difficulty badge */}
             <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold ${DIFFICULTY_COLORS[project.difficulty]}`}>
               {project.difficulty}
             </span>
-            {/* Status badge */}
             <span className="inline-flex items-center gap-1 rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-xs font-bold text-green-300">
               <Check className="h-3 w-3" />
               {project.status}
@@ -215,22 +199,13 @@ function ProjectCard({ project, index }) {
           </div>
         </div>
 
-        <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-300">
-          {project.type}
-        </p>
-
+        <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-300">{project.type}</p>
         <h2 className="mt-3 text-2xl font-black text-white">{project.title}</h2>
-
-        <p className="mt-4 min-h-[72px] text-sm leading-6 text-slate-300">
-          {project.description}
-        </p>
+        <p className="mt-4 min-h-[72px] text-sm leading-6 text-slate-300">{project.description}</p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {project.stack.map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300"
-            >
+            <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
               {item}
             </span>
           ))}

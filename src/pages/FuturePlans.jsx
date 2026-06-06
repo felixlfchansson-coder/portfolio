@@ -17,7 +17,7 @@ const statusStyles = {
   "Future Project": "border-purple-400/30 bg-purple-400/10 text-purple-300",
 };
 
-export default function FutureForge() {
+export default function FuturePlans() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#020617] pl-28 text-white">
       <img
@@ -32,13 +32,13 @@ export default function FutureForge() {
       <section className="relative z-10 mx-auto max-w-7xl px-8 py-14">
         <header className="max-w-4xl">
           <p className="mb-4 text-sm font-black uppercase tracking-[0.35em] text-orange-400">
-            Plans. Systems. Learning.
+            Ideas. Plans. Future builds.
           </p>
 
           <h1 className="text-6xl font-black leading-none tracking-[0.18em] md:text-8xl">
-            Future{" "}
+            The{" "}
             <span className="bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-500 bg-clip-text text-transparent">
-              Forge
+              Workshop
             </span>
           </h1>
 

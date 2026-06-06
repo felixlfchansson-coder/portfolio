@@ -3,9 +3,9 @@ import Sidebar from "./components/Sidebar";
 
 import Home from "./pages/Home";
 import Journey from "./pages/Journey";
-import SkyVault from "./pages/SkyVault";
-import EmberArchive from "./pages/EmberArchive";
-import FutureForge from "./pages/FutureForge";
+import SkyVault from "./pages/Projects";
+import EmberArchive from "./pages/GameLab";
+import FutureForge from "./pages/FuturePlans";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FenixCV from "./pages/FenixCV";
@@ -17,10 +17,10 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/journey" element={<Journey />} />
-        <Route path="/skyvault" element={<SkyVault />} />
-        <Route path="/ember-archive" element={<EmberArchive />} />
-        <Route path="/future-forge" element={<FutureForge />} />
+        <Route path="/the-path" element={<Journey />} />
+        <Route path="/projects" element={<SkyVault />} />
+        <Route path="/the-forge" element={<EmberArchive />} />
+        <Route path="/the-workshop" element={<FutureForge />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cv" element={<FenixCV />} />
