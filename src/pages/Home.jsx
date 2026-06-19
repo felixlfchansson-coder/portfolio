@@ -1,4 +1,4 @@
-import { ArrowRight, Code2, Flame, Rocket, Trophy } from "lucide-react";
+import { ArrowRight, Code2, Rocket, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -6,10 +6,12 @@ import hemBg from "../assets/hem/hem-bg.png";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#020617] pl-28 text-white">
+    <main className="relative min-h-screen overflow-hidden bg-[#020617] pt-16 lg:pt-0 lg:pl-28 text-white">
       <img src={hemBg} alt="" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/95 via-[#020617]/45 to-[#020617]/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
+      {/* Extra scrim on phones so text stays readable over the bright phoenix */}
+      <div className="absolute inset-0 bg-[#020617]/55 md:hidden" />
 
       <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-8 py-16">
         <motion.div
