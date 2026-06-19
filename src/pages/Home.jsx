@@ -62,9 +62,9 @@ export default function Home() {
           <HomeCard
             icon={<Rocket />}
             title="Current project"
-            value="Fenix Portfolio"
-            text="Currently building my personal portfolio universe using React and Tailwind."
-            to="/projects"
+            value="Skafferi"
+            text="A pantry server and app with a REST API for tracking food, recipes and a shopping list — built with Node, Express and SQLite, plus an Open Food Facts integration."
+            href="https://github.com/felixlfchansson-coder/skafferi-App"
           />
           <HomeCard
             icon={<Trophy />}
@@ -75,9 +75,9 @@ export default function Home() {
           />
           <HomeCard
             icon={<Code2 />}
-            title="Current Course"
-            value="Version Control with Git"
-            text="Focused on Git, GitHub, branches, commits and collaborative development."
+            title="Right now"
+            value="Summer break"
+            text="Coursework paused for the summer — using the time to build real projects like Skafferi."
             to="/the-path"
           />
         </div>
